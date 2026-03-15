@@ -16,24 +16,20 @@ const BadgeComponent = memo(function Badge({
   iconPosition = 'left'
 }: BadgeProps) {
   const variants = {
-    primary: `
-      bg-[var(--accent-color)]
-      text-white
-      shadow-[0_1px_4px_color-mix(in_srgb,var(--accent-color)_30%,transparent)]
-    `,
-    secondary: `
-      bg-[var(--glass-bg)]
-      backdrop-blur-[8px]
-      [-webkit-backdrop-filter:blur(8px)]
-      border border-[var(--glass-border)]
-      text-[var(--text-color)]
-    `,
+    primary: "bg-[var(--accent-color)] text-white shadow-[var(--shadow-sm)]",
+    secondary: "bg-[var(--glass-bg)] border border-[var(--glass-border)] text-[var(--text-color)]",
   };
 
   const iconElement = icon && (
     <span
-      className={`inline-flex items-center justify-center ${iconPosition === 'left' ? 'mr-1' : 'ml-1'}`}
-      style={{ width: '0.875em', height: '0.875em' }}
+      className={`inline-flex items-center justify-center ${iconPosition === 'left' ? 'mr-1' : 'ml-1'
+        }`}
+      style={{
+        width: '0.875em',
+        height: '0.875em',
+        transform: 'translateZ(0)',
+        willChange: 'auto',
+      }}
     >
       {icon}
     </span>
@@ -43,13 +39,16 @@ const BadgeComponent = memo(function Badge({
     <span
       className={`
         inline-flex items-center justify-center
-        px-2 py-0.5
+        px-1.5 py-0.5
         rounded-[var(--radius-full)]
-        text-[10px] font-bold tracking-[0.02em]
-        leading-tight whitespace-nowrap
+        text-[10px] font-semibold
         ${variants[variant]}
         ${className}
       `}
+      style={{
+        transform: 'translateZ(0)',
+        willChange: 'auto',
+      }}
     >
       {icon && iconPosition === 'left' && iconElement}
       {children}
@@ -58,4 +57,7 @@ const BadgeComponent = memo(function Badge({
   );
 });
 
+// Export both named and default for compatibility
 export const Badge = BadgeComponent;
+
+

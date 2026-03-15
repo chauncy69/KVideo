@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * Switch - A reusable toggle switch component
+ * Following Liquid Glass design system
+ */
+
 import React from 'react';
 
 interface SwitchProps {
@@ -20,11 +25,11 @@ export function Switch({
     return (
         <label
             className={`
-                relative inline-flex items-center cursor-pointer
-                h-[28px] w-[48px] shrink-0
-                ${disabled ? 'opacity-40 cursor-not-allowed' : ''}
-                ${className}
-            `}
+        switch relative inline-flex items-center cursor-pointer 
+        h-[30px] w-[50px] shrink-0
+        ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
+        ${className}
+      `}
         >
             <input
                 type="checkbox"
@@ -36,24 +41,20 @@ export function Switch({
             />
             <div
                 className={`
-                    w-full h-full rounded-[var(--radius-full)]
-                    bg-[color-mix(in_srgb,var(--text-color)_15%,transparent)]
-                    peer-checked:bg-[var(--accent-color)]
-                    transition-[background-color,box-shadow] duration-[0.35s]
-                    [transition-timing-function:cubic-bezier(0.22,0.68,0,1)]
-                    peer-checked:shadow-[0_0_8px_color-mix(in_srgb,var(--accent-color)_30%,transparent)]
-                    before:content-[''] before:absolute
-                    before:h-[22px] before:w-[22px]
-                    before:left-[3px] before:top-[3px]
-                    before:bg-white before:rounded-[var(--radius-full)]
-                    before:transition-[transform,width] before:duration-[0.35s]
-                    before:[transition-timing-function:cubic-bezier(0.22,0.68,0,1)]
-                    before:shadow-[0_1px_4px_rgba(0,0,0,0.15)]
-                    peer-checked:before:translate-x-[20px]
-                    active:before:w-[26px]
-                    peer-checked:active:before:translate-x-[16px]
-                `}
-            />
+          switch-slider w-full h-full rounded-[var(--radius-full)] 
+          bg-[color-mix(in_srgb,var(--text-color)_20%,transparent)] 
+          peer-checked:bg-[var(--accent-color)] 
+          transition-colors duration-[0.4s] cubic-bezier(0.2,0.8,0.2,1) 
+          before:content-[''] before:absolute before:h-[26px] before:w-[26px] 
+          before:left-[2px] before:bottom-[2px] 
+          before:bg-white before:rounded-[var(--radius-full)] 
+          before:transition-transform before:duration-[0.4s] 
+          before:cubic-bezier(0.2,0.8,0.2,1) 
+          before:shadow-[0_1px_3px_rgba(0,0,0,0.2)] 
+          peer-checked:before:translate-x-[20px]
+          active:before:scale-95
+        `}
+            ></div>
         </label>
     );
 }

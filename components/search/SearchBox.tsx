@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, FormEvent, useEffect, useRef } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Icons } from '@/components/ui/Icon';
@@ -18,28 +18,52 @@ export function SearchBox({ onSearch, onClear, initialQuery = '', placeholder = 
     const [query, setQuery] = useState(initialQuery);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    // Search history hook
     const {
-        searchHistory, isDropdownOpen, highlightedIndex,
-        showDropdown, hideDropdown, addSearch, removeSearch,
-        clearAll, selectHistoryItem, navigateDropdown, resetHighlight,
+        searchHistory,
+        isDropdownOpen,
+        highlightedIndex,
+        showDropdown,
+        hideDropdown,
+        addSearch,
+        removeSearch,
+        clearAll,
+        selectHistoryItem,
+        navigateDropdown,
+        resetHighlight,
     } = useSearchHistory((selectedQuery) => {
         setQuery(selectedQuery);
         onSearch(selectedQuery);
+        // Blur the input after selecting from history
         inputRef.current?.blur();
     }, isPremium);
 
+    // Update query when initialQuery changes
     useEffect(() => {
         setQuery(initialQuery);
     }, [initialQuery]);
 
     const {
-        handleSubmit, handleClear, handleInputFocus,
-        handleInputBlur, handleKeyDown,
+        handleSubmit,
+        handleClear,
+        handleInputFocus,
+        handleInputBlur,
+        handleKeyDown,
     } = useSearchBoxHandlers({
-        query, setQuery, onSearch, onClear, inputRef,
-        isDropdownOpen, highlightedIndex, searchHistory,
-        addSearch, hideDropdown, showDropdown,
-        resetHighlight, selectHistoryItem, navigateDropdown,
+        query,
+        setQuery,
+        onSearch,
+        onClear,
+        inputRef,
+        isDropdownOpen,
+        highlightedIndex,
+        searchHistory,
+        addSearch,
+        hideDropdown,
+        showDropdown,
+        resetHighlight,
+        selectHistoryItem,
+        navigateDropdown,
     });
 
     return (
@@ -53,7 +77,7 @@ export function SearchBox({ onSearch, onClear, initialQuery = '', placeholder = 
                 onBlur={handleInputBlur}
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
-                className="text-base sm:text-lg pr-28 sm:pr-36 md:pr-44 truncate shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] transition-shadow"
+                className="text-base sm:text-lg pr-28 sm:pr-36 md:pr-44 truncate"
                 aria-label="搜索视频内容"
                 aria-expanded={isDropdownOpen}
                 aria-controls="search-history-dropdown"
@@ -66,25 +90,26 @@ export function SearchBox({ onSearch, onClear, initialQuery = '', placeholder = 
                     <button
                         type="button"
                         onClick={handleClear}
-                        className="p-2 text-[var(--text-color-secondary)] hover:text-[var(--text-color)] transition-colors touch-manipulation cursor-pointer rounded-[var(--radius-full)] hover:bg-[color-mix(in_srgb,var(--text-color)_8%,transparent)]"
+                        className="p-2 text-[var(--text-color)] opacity-70 hover:opacity-100 transition-opacity touch-manipulation cursor-pointer"
                         aria-label="清除搜索"
                     >
-                        <Icons.X size={18} />
+                        <Icons.X size={20} />
                     </button>
                 )}
                 <Button
                     type="submit"
                     disabled={!query.trim()}
                     variant="primary"
-                    className="px-3 sm:px-4 md:px-6 rounded-[var(--radius-2xl)]"
+                    className="px-3 sm:px-4 md:px-6"
                 >
                     <span className="flex items-center gap-2">
-                        <Icons.Search size={18} />
-                        <span className="hidden sm:inline font-semibold">搜索</span>
+                        <Icons.Search size={20} />
+                        <span className="hidden sm:inline">搜索</span>
                     </span>
                 </Button>
             </div>
 
+            {/* Search History Dropdown */}
             <SearchHistoryDropdown
                 isOpen={isDropdownOpen}
                 searchHistory={searchHistory}
